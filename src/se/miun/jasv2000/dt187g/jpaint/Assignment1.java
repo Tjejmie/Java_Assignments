@@ -9,7 +9,7 @@ package se.miun.jasv2000.dt187g.jpaint;
 * Giving proper comments in your program makes it more
 * user friendly and it is assumed as a high quality code.
 *
-* @author Your Name (studentid)
+* @author jasv2000 | Jamie Svanberg
 * @version 1.0
 */
 public class Assignment1 {
@@ -25,7 +25,9 @@ public class Assignment1 {
 		// one as a Shape. Draw them.
 		Rectangle r1 = new Rectangle(new Point(0, 0),  "#0000ff");  // blue
 		Shape s1 = new Rectangle(2, -5, "#ff0000"); // red
+		
 		System.out.println("Drawing two newly created rectangles...");
+		
 		r1.draw();
 		s1.draw();
 		
