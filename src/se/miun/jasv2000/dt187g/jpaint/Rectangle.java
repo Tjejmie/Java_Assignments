@@ -1,16 +1,13 @@
 package se.miun.jasv2000.dt187g.jpaint;
 
 import java.awt.Graphics;
-import java.lang.reflect.Array;
-
-import javax.print.event.PrintEvent;
 
 
 public class Rectangle extends Shape { 
 
     public Rectangle(double x, double y, String color) {
         super(x, y, color);
-        
+    
         points = new Point[2];
         points[0] = new Point(x, y);
  
@@ -21,84 +18,97 @@ public class Rectangle extends Shape {
         
     }
 
- 
-
 	public double getWidth() {
-        
+        double asd;
+        if(points[1] != null){
+            asd = points[0].x - points[1].x;
+            return Math.abs(asd);
 
-        // double xValue = (double) Array.get(points, 0);
-
-        // System.out.println(xValue); // 5.0
-        // return xValue;
-        return 0;
-        
-      
-        
+        }
+        else{
+            return -1;
+        }
         
 	}
 
-   
 
-
-    private double parseDouble(Point point) {
-        return 0;
+    public double getHeight() {
+        double asd;
+        if(points[1] != null){
+            asd = points[0].y - points[1].y;
+            return Math.abs(asd);
+           
+        }
+        else{
+            return -1;
+        }
     }
 
-    public Double getHeight() {
-        return Math.abs(x);
-        // return null;
+
+    public String getEnd() {
+        String message = "N/A";
+        
+        if(hasEndpoint() == true){
+            return points[1].toString();
+        }
+        else{
+            return message;
+        }
     }
 
     @Override
     public void draw() {
-      
-        System.out.println("Rectangle[start=" + points[0] + " end=" + points[1] + " width=N/A height=" +  "color=" + color + "]");
-        
+        System.out.println(toString());
     }
 
     @Override
     public void draw(Graphics g) {
-        // TODO Auto-generated method stub
+        // Ska vara tom än så länge
         
     }
 
     @Override
     public double getCircumference() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 
-    @Override
-    public double getArea() {
+        double getWidth = getWidth() * 2;
+        double getHeight = getHeight() * 2;
+        double result = getWidth + getHeight;
 
-        
-        boolean hasValue = false;
-        double area = getWidth() * getHeight();
- 
-        if(hasValue == true){
-            return area;
+        if(points[1] != null && points[0] != null){
+            return result;
         }
         else{
             return -1;
         }
-       
- 
     }
 
     @Override
-    public boolean hasEndpoint() {
+    public double getArea() { //Metod för att räkna arean på trianglen
 
-        // String endpoint;
+        double area = getWidth() * getHeight();
 
-        // if (points[1] != null){
-            
-        //     return true;
-        // }
-        // else{
-        //     endpoint = "N/A";
-        //     return false;
-        // }
-        return true;
+        if(points[1] != null && points[0] != null){ //Om start/slutvärdet inte är null returneras arean
+            return area;
+        }
+        else{
+            return -1; //Ifall värdet är null returneras -1
+        }
+    }
+
+    @Override
+    public boolean hasEndpoint() { //Metod för att kontrollera ifall slutvärdet är null
+
+        if (points[1] != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+     
+    }
+
+    public String toString(){
+        return ("Rectangle[start=" + points[0] + " end=" + getEnd() + "; width= "+ getWidth() + "; height= " + getHeight() +  " color=" + color + "]");
     }
 
     

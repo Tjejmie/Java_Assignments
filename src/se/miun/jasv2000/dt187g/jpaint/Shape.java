@@ -17,9 +17,6 @@ public abstract class Shape implements Drawable {
         this.x = x;
         this.y = y;
         this.color = color;
-        // points = new Point[2];
-        // points[0] = new Point(x, y);
-        
        
     }
 
@@ -28,14 +25,8 @@ public abstract class Shape implements Drawable {
         this.points[0] = point;
         
         this.color = color;
-        // points[0] = new Point(x, y);
-        // System.out.println(point);
-        
         
     }
-   
-       
-
 
     public String getColor(){
         return color;
@@ -49,21 +40,19 @@ public abstract class Shape implements Drawable {
     public abstract double getArea(); // returnera figurens area
 
     public Point addPoint(double x, double y){ //Objekt av x,y. Dessa objekts läggs sedan in i array plats2
+
         Point point = new Point(x,y);
         this.points[1] = point;
+
         return point;
     }
-    
 
     public Point addPoint(Point p) {
         this.points[1] = p;
         return p;
     }
 
-    
-    
 
- 
 
     public abstract boolean hasEndpoint(); //Returnerar true eller false
 
