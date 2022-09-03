@@ -12,7 +12,7 @@ import java.awt.Graphics;
 
 public class Circle extends Shape {
     
-    final double pi = Math.PI; //Inbyggd klass som hämtar PI
+    final double pi = 3.14; 
 
     public Circle(double x, double y, String color) {
         super(x, y, color);
