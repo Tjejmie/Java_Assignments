@@ -11,13 +11,9 @@ package se.miun.jasv2000.dt187g.jpaint;
 public abstract class Shape implements Drawable {
     protected String color;
     protected Point[] points;
-    protected double x;
-    protected double y;
 
     public Shape(double x, double y, String color) {
-        this.x = x;
-        this.y = y;
-        this.color = color;
+        this(new Point(x, y), color);
     }
 
     public Shape(Point point, String color) {
@@ -53,7 +49,7 @@ public abstract class Shape implements Drawable {
     public abstract boolean hasEndpoint();
 
 
-    public String getEndpoint() { //Metod som sätter endpoint för rectangle och circle
+    public String getEndpointAsString() { //Metod som sätter endpoint för rectangle och circle
         String message = "N/A";
         
         if(hasEndpoint() == true){

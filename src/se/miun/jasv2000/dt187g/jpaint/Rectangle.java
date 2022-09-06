@@ -13,8 +13,6 @@ public class Rectangle extends Shape {
 
     public Rectangle(double x, double y, String color) {
         super(x, y, color);
-        points = new Point[2]; //Skapar en ny array av Points med två indexvärden
-        points[0] = new Point(x, y); //x och y sätts som index0 i points
     }
 
     public Rectangle(Point point, String color) {
@@ -28,7 +26,7 @@ public class Rectangle extends Shape {
             return Math.abs(width); //Metod som hanterar när koordinaterna är inlagda tvärtom. Ändrar talet från negativt till positivt
         }
         else{
-            return -1; //Om slutvärdet inte existerar presenteras -1
+            return -1; //Om slutvärdet inte existerar returnerar -1
         }
 	}
 
@@ -39,7 +37,7 @@ public class Rectangle extends Shape {
             return Math.abs(height); //Metod som hanterar när koordinaterna är inlagda tvärtom. Ändrar talet från negativt till positivt
         }
         else{
-            return -1; //Om slutvärdet inte existerar presenteras -1
+            return -1; //Om slutvärdet inte existerar returnerar -1
         }
     }
 
@@ -64,9 +62,10 @@ public class Rectangle extends Shape {
             return result;
         }
         else{
-            return -1; //Om slutvärdet inte existerar presenteras -1
+            return 1; //Om slutvärdet inte existerar presenteras -1
         }
     }
+
 
     @Override
     public double getArea() { //Metod för att räkna arean på trianglen
@@ -93,6 +92,12 @@ public class Rectangle extends Shape {
     }
 
     public String toString(){
-        return ("Rectangle[start=" + points[0] + " end=" + getEndpoint() + "; width= "+ getWidth() + "; height= " + getHeight() +  " color=" + color + "]");
+        if(hasEndpoint() == false){
+            return "Drawing a Rectangle [start=" +  points[0].x + ", " + points[0].y + "; " + "end=" + "N/A"  + "; " + "width=" + "N/A" + "; " + "height=" + "N/A" + "; " + "color=" + color + "]"; 
+        }
+        else{
+            return "Drawing a Rectangle[start=" + points[0] + " end=" + getEndpointAsString() + "; width= "+ getWidth() + "; height= " + getHeight() +  " color=" + color + "]";
+        }
+        
     }
 }
