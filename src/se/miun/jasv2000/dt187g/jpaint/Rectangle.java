@@ -14,9 +14,10 @@ public class Rectangle extends Shape {
     public Rectangle(double x, double y, String color) {
         super(x, y, color);
         Point point = new Point(x,y);
-        // points = new Point[2]; //Skapar en ny array av Points med två indexvärden
+
         points.add(0, point);
-        // points[0] = new Point(x, y); //x och y sätts som index0 i points
+
+
     }
 
     public Rectangle(Point point, String color) {

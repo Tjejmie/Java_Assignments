@@ -58,12 +58,12 @@ public abstract class Shape implements Drawable {
 
 
     public abstract boolean hasEndpoint();
+    
     public String getEndpoint() { //Metod som sätter endpoint för rectangle och circle
         String message = "N/A";
         
         if(hasEndpoint() == true){
             return points.get(1).toString();
-            // return points[1].toString();
         }
         else{
             return message;

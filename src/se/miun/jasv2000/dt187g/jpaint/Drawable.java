@@ -4,6 +4,7 @@ public interface Drawable {
     void draw();
     void draw(java.awt.Graphics g);
     
+    
 }
 
 

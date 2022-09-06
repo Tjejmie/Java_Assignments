@@ -20,6 +20,7 @@ public class Circle extends Shape {
         // points = new Point[2]; //Skapar en ny array av Points med två indexvärden
         points.add(0, point);
         // points[0] = new Point(x, y); //x och y sätts som index0 i points
+
     }
 
     public Circle(Point p, String color) {
