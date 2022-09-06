@@ -93,7 +93,7 @@ public class Rectangle extends Shape {
 
     public String toString(){
         if(hasEndpoint() == false){
-            return "Drawing a Rectangle [start=" +  points[0].x + ", " + points[0].y + "; " + "end=" + "N/A"  + "; " + "width=" + "N/A" + "; " + "height=" + "N/A" + "; " + "color=" + color + "]"; 
+            return "Drawing a Rectangle [start=" +  points[0] + "; " + "end=" + "N/A"  + "; " + "width=" + "N/A" + "; " + "height=" + "N/A" + "; " + "color=" + color + "]"; 
         }
         else{
             return "Drawing a Rectangle[start=" + points[0] + " end=" + getEndpointAsString() + "; width= "+ getWidth() + "; height= " + getHeight() +  " color=" + color + "]";

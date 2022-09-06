@@ -88,10 +88,10 @@ public class Circle extends Shape {
     public String toString(){
 
         if(hasEndpoint() == false){
-            return "Drawing a Circle[start=" +  points[0].x + ", " + points[0].y + "; " + "end=" + "N/A"  + "; " + "radius=" + "N/A" + "; " + "color=" + color + "]"; 
+            return "Drawing a Circle[start=" +  points[0] + "; " + "end=" + "N/A"  + "; " + "radius=" + "N/A" + "; " + "color=" + color + "]"; 
         }
         else{
-         return "Drawing a Circle[start=" + points[0] + " end=" + getEndpointAsString() + " radius=" + getRadius()  + " color=" + color + "]";
+            return "Drawing a Circle[start=" + points[0] + " end=" + getEndpointAsString() + " radius=" + getRadius()  + " color=" + color + "]";
         }
     }
 }
