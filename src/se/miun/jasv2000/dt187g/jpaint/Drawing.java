@@ -2,41 +2,31 @@ package se.miun.jasv2000.dt187g.jpaint;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.plaf.synth.SynthGraphicsUtils;
+/**
+* <h1>Drawing</h1>
+* En klass som hanterar en samling av Shape-objekt. Implementerar grässnittet Drawable då Drawing är en klass som är "ritbar".
+* 
+*
+* @author jasv2000 | Jamie Svanberg
+* @version 1.0
+*/
 
 public class Drawing implements Drawable {
 
-    protected String name;
-    protected String author;
-
-    private Rectangle rectangle;
-    //shapes av någon klass som implementerar gränssnittet List<E>
-    List<Shape> shapes = new ArrayList<>();
+    private String name;
+    private String author;
+    private ArrayList<Shape> shapes;
     
     public Drawing() {
-        this.shapes = new ArrayList<>();
+        this.shapes = new ArrayList<>(); 
     }
 
     public Drawing(String name, String author) {
         this.name = name;
         this.author = author;
-        
     }
 
-
-  
-
-    public void addShape(Shape shape) {
-
-        if(shape != null){
-            shapes.add(shape);
-        }
-        else{
-            
-        }
-    }
 
     //Get metoder
     public String getName(){
@@ -60,37 +50,46 @@ public class Drawing implements Drawable {
         this.author = author;
     }
 
-    
+    public void addShape(Shape shape) { //metod som tar in ett shapeobjekt och lägger in i listan shapes
+
+        if(shape != null){
+            shapes.add(shape); 
+        }
+    }
 
     public double getSize() {
-        return shapes.size(); 
+        return shapes.size();  //Returnerar listans storlek
     }
     
-    public double getTotalCircumference() {
-        if (shapes.size() != 0){
-            for(int i = 0; i < shapes.size(); i++){
-                
+    public double getTotalCircumference(){ //metod som returnerar omkretsen av alla figurer
+        double circumference = 0;
+        for (Shape shape : shapes) {
+            if(shape.hasEndpoint()){ //Omkretsen räknas enbart ut om det finns en endpoint
+                circumference += shape.getCircumference();
+            }
         }
-
-        
+        return circumference;
     }
-        else{
-            return 0;
+
+    public double getTotalArea(){ //metod som returnerar arean för alla figurer
+        double area = 0;
+        for (Shape shape : shapes) {
+            if(shape.hasEndpoint()){
+                area += shape.getArea(); //arean hämtas från getArea metoden i shape. arean läggs till i variabeln area.
+            }
         }
-
-        return 1;
-
+        return area; 
     }
 
-    public double getTotalArea() {
-        return 0;
-    }
 
     @Override
     public void draw() {
-        System.out.println(toString());
-        
+        System.out.println("A drawing by " + author + " called " + name);
+        for(Shape shape : shapes){ //returnerar figurernas toString
+            System.out.println(shape);
+        }
     }
+
 
     @Override
     public void draw(Graphics g) {
@@ -99,7 +98,7 @@ public class Drawing implements Drawable {
     }
 
     public String toString(){
-        return ("Drawing[name=" + getName() + " author=" + getAuthor() +  "; size= " + getSize() + "; circumference= "+ getTotalCircumference() + " area="+ getTotalArea() + "]");
+        return ("Drawing[name=" + getName() + "; author=" + getAuthor() +  "; size= " + getSize() + "; circumference= "+ getTotalCircumference() + "; area="+ getTotalArea() + ";]");
     }
 
     

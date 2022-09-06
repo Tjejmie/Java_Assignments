@@ -13,15 +13,12 @@ public class Rectangle extends Shape {
 
     public Rectangle(double x, double y, String color) {
         super(x, y, color);
-        Point point = new Point(x,y);
-
-        points.add(0, point);
-
 
     }
 
     public Rectangle(Point point, String color) {
         super(point, color); 
+
     }
 
 	public double getWidth() { //Metod för att räkna ut rektangelns bredd. 
@@ -63,12 +60,14 @@ public class Rectangle extends Shape {
         double getHeight = getHeight() * 2;
         double result = getWidth + getHeight;
 
-        if(points.get(1) != null && points.get(0) != null){
-            return result;
+        try {
+            points.get(0);
+            points.get(1);
+            return result; 
+        } catch (IndexOutOfBoundsException e) {
+            return -1; //Ifall värdet är null returneras -1
         }
-        else{
-            return -1; //Om slutvärdet inte existerar presenteras -1
-        }
+
     }
 
     @Override
@@ -84,16 +83,6 @@ public class Rectangle extends Shape {
         }
     }
 
-    // @Override
-    // public boolean hasEndpoint() { //Metod för att kontrollera ifall slutvärdet är null
-
-    //     if (points.get(1) != null){
-    //         return true;
-    //     }
-    //     else{
-    //         return false;
-    //     }
-    // }
     
     @Override
     public boolean hasEndpoint() { //Metod för att kontrollera ifall slutvärdet är null
@@ -107,7 +96,12 @@ public class Rectangle extends Shape {
     
 
     public String toString(){
-        // return ("Rectangle[start=" + points.get(0) + " end=" + getEndpoint() + "; width= "+ getWidth() + "; height= " + getHeight() +  " color=" + color + "]");
-        return ("Rectangle[start=" + points.get(0) + " end=" + getEndpoint() +  "; width= "+ getWidth() +  "; height= " + getHeight() +   " color=" + color + "]");
+        if(hasEndpoint() == false){
+            return "Drawing a Rectangle [start="  + points.get(0) + ", " + getEndpointAsString() + "; " + "end=" + "N/A"  + "; " + "width=" + "N/A" + "; " + "height=" + "N/A" + "; " + "color=" + color + "]"; 
+        }
+        else{
+            return "Drawing a Rectangle [start=" + points.get(0) + " end=" + getEndpointAsString() +  "; width= "+ getWidth() +  "; height= " + getHeight() +   " color=" + color + "]";
+        }
+        
     }
 }

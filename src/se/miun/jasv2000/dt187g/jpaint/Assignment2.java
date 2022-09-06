@@ -6,7 +6,7 @@ package se.miun.jasv2000.dt187g.jpaint;
 * author and different shapes in it. It then calls various
 * methods to print total circumference and area. 
 *
-* @author Your Name (studentid)
+* @author jasv2000 | Jamie Svanberg
 * @version 1.0
 */
 public class Assignment2 {
