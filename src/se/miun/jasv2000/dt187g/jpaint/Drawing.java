@@ -25,6 +25,7 @@ public class Drawing implements Drawable {
     public Drawing(String name, String author) {
         this.name = name;
         this.author = author;
+        this.shapes = new ArrayList<>(); 
     }
 
 
