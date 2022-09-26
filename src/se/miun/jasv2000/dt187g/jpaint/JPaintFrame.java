@@ -1,8 +1,10 @@
 package se.miun.jasv2000.dt187g.jpaint;
 import java.awt.*;
+import java.awt.event.*;
 
+import javax.lang.model.util.ElementScanner14;
 import javax.swing.*;
-
+import java.util.*;
 
 /**
  * Klass som ärver ifrån JFrame och som används för att skapa ett grafiskt användargränssnitt.
@@ -11,7 +13,7 @@ import javax.swing.*;
  * @author jasv2000 | Jamie Svanberg
  * @version 1.0
  */
-public class JPaintFrame extends JFrame {
+public class JPaintFrame extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,15 +35,18 @@ public class JPaintFrame extends JFrame {
     private JLabel botLeftText, botRightText;
     private JPanel botColorBox, botJPanel, botLeft, botRight; 
 
+    String name;
+    String author;
+
 	public JPaintFrame() {
-        // Set the title of this JFrame (window)
-		setTitle("JPaint");
+        setTitle();
+
 
         // What should happen when the user closes the window
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Using null centers the window on the screen
-		setLocationRelativeTo(null);
+		// setLocationRelativeTo(null);
 
         //Call methods
         setIcon();
@@ -56,6 +61,36 @@ public class JPaintFrame extends JFrame {
         //Set size on the window
         setSize(800,600); 
 	}
+    public boolean nameExist(String name){ //Metod som returnerar true ifall name inte är null eller är en string som ej är tom
+        this.name = name;
+        if (name == null ||name == ""){
+            return false;
+        }
+        else{
+            return true; 
+        }
+    }
+    public boolean authorExist(String author){ //Metod som returnerar true ifall author inte är null eller är en tom string
+        return author != null && author != "";
+    }
+
+    private void setTitle(){
+        // Set the title of this JFrame (window)
+
+		if(authorExist(author) == true && nameExist(name) == true){
+            setTitle("JPaint" + " - " + name + " by " + author);
+            
+        }
+        else if(authorExist(author) == true){
+            setTitle("JPaint" + " - " + author);
+        }
+        else if(nameExist(name) == true){
+            setTitle("JPaint" + " - " + name);
+        }
+        else{
+            setTitle("JPaint");
+        }
+    }
 
     //Method to create menu
 	private void createMenu() {
@@ -86,6 +121,12 @@ public class JPaintFrame extends JFrame {
         menu2.add(i7);
         menuBar.add(menu1);
         menuBar.add(menu2);
+
+        //Registrerar lyssnare på menyalternativen
+        i6.addActionListener(this);
+        i7.addActionListener(this);
+
+
 
         setJMenuBar(menuBar);
 	}
@@ -176,5 +217,31 @@ public class JPaintFrame extends JFrame {
                 "C:/Users/Jamie Lannister/Desktop/Java_Assignments/Assignments/src/se/miun/jasv2000/dt187g/jpaint/paint.png").getImage());
     }
 
-	
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFrame frame = new JFrame();
+        if (e.getSource() == i6){
+            name = (String)JOptionPane.showInputDialog(
+                frame,
+                "Enter name of the drawing:", 
+                "Indata",            
+                JOptionPane.QUESTION_MESSAGE,
+                null,            
+                null, 
+                null);
+        }
+        else if(e.getSource() == i7){
+            author = (String)JOptionPane.showInputDialog(
+                frame,
+                "Enter name of the author:", 
+                "Indata",            
+                JOptionPane.QUESTION_MESSAGE,
+                null,            
+                null, 
+                null);
+               
+        }
+        setTitle();
+    }
+
 }
