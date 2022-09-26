@@ -35,9 +35,11 @@ public class JPaintFrame extends JFrame implements ActionListener {
     private JLabel botLeftText, botRightText;
     private JPanel botColorBox, botJPanel, botLeft, botRight; 
 
-    String name;
-    String author;
-
+    String name = "";
+    String author = "";
+    String dialogInfo;
+    String dialogMessage;
+    String shapeMessage;
 	public JPaintFrame() {
         setTitle();
 
@@ -61,30 +63,24 @@ public class JPaintFrame extends JFrame implements ActionListener {
         //Set size on the window
         setSize(800,600); 
 	}
-    public boolean nameExist(String name){ //Metod som returnerar true ifall name inte är null eller är en string som ej är tom
-        this.name = name;
-        if (name == null ||name == ""){
-            return false;
-        }
-        else{
-            return true; 
-        }
+
+    public boolean nameExist(String name){ //Check if name exist
+        return !name.isEmpty() && name != null;
     }
-    public boolean authorExist(String author){ //Metod som returnerar true ifall author inte är null eller är en tom string
-        return author != null && author != "";
+    public boolean authorExist(String author){ // Check if author exist
+        return !author.isEmpty() && author != null;
     }
 
-    private void setTitle(){
-        // Set the title of this JFrame (window)
-
-		if(authorExist(author) == true && nameExist(name) == true){
+    // Set the title of this JFrame (window)
+    private void setTitle(){ 
+        
+        if(nameExist(name) == true && authorExist(author) == true){
             setTitle("JPaint" + " - " + name + " by " + author);
-            
         }
         else if(authorExist(author) == true){
             setTitle("JPaint" + " - " + author);
         }
-        else if(nameExist(name) == true){
+		else if(nameExist(name) == true){
             setTitle("JPaint" + " - " + name);
         }
         else{
@@ -126,7 +122,9 @@ public class JPaintFrame extends JFrame implements ActionListener {
         i6.addActionListener(this);
         i7.addActionListener(this);
 
-
+        i1.addActionListener(this);
+        i4.addActionListener(this);
+        i2.addActionListener(this);
 
         setJMenuBar(menuBar);
 	}
@@ -217,31 +215,69 @@ public class JPaintFrame extends JFrame implements ActionListener {
                 "C:/Users/Jamie Lannister/Desktop/Java_Assignments/Assignments/src/se/miun/jasv2000/dt187g/jpaint/paint.png").getImage());
     }
 
+    public String setDialog(String dialogInfo){ // Method to set information for the dialog
+        JFrame frame = new JFrame();
+        dialogInfo = (String)JOptionPane.showInputDialog(
+                frame,
+                dialogMessage, 
+                "Indata",            
+                JOptionPane.QUESTION_MESSAGE,
+                null,            
+                null, 
+                shapeMessage);
+                return dialogInfo;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        JFrame frame = new JFrame();
-        if (e.getSource() == i6){
-            name = (String)JOptionPane.showInputDialog(
-                frame,
-                "Enter name of the drawing:", 
-                "Indata",            
-                JOptionPane.QUESTION_MESSAGE,
-                null,            
-                null, 
-                null);
+        
+        if (e.getSource() == i6){ // Menu-option "Name..."
+            dialogMessage = "Enter name of the drawing:";
+            shapeMessage = null;
+            name = setDialog(dialogInfo);
+            setTitle();
         }
-        else if(e.getSource() == i7){
-            author = (String)JOptionPane.showInputDialog(
-                frame,
-                "Enter name of the author:", 
-                "Indata",            
-                JOptionPane.QUESTION_MESSAGE,
-                null,            
-                null, 
-                null);
-               
+
+        else if(e.getSource() == i7){ // Menu-option "Author..."
+            dialogMessage = "Enter name of the author:";
+            shapeMessage = null;
+            author = setDialog(dialogInfo);
+            setTitle();
         }
-        setTitle();
+
+        else if(e.getSource() == i1){ // Menu-option "New..."
+            dialogMessage = "Enter name of the drawing:";
+            name = setDialog(dialogInfo);
+            dialogMessage = "Enter name of the author:";
+            author = setDialog(dialogInfo);
+            setTitle();
+        }
+        
+        else if(e.getSource() == i2){ // Menu-option "Save as..."
+
+            if(nameExist(name) == true && authorExist(author) == true){
+            shapeMessage = (name + " by " + author + ".shape");
+            }
+            else if(authorExist(author) == true){
+            shapeMessage = (author+".shape");
+            }
+		    else if(nameExist(name) == true){
+            shapeMessage = (name+".shape");
+            }
+            else{
+            shapeMessage = (".shape");
+            }
+            
+            dialogMessage = "Save drawing to:";
+
+            setDialog(dialogInfo);
+            
+        }
+
+        else if(e.getSource() == i4){ // Menu-option "Exit"
+            System.exit(0);
+        }
+        
     }
 
 }
