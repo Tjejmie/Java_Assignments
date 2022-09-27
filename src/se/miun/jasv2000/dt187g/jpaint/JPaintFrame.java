@@ -232,10 +232,10 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     }
 
     private void setIcon(){  //Method to set icon on window
-        setIconImage(new ImageIcon(
-                "C:/Users/Jamie Lannister/Desktop/Java_Assignments/Assignments/src/se/miun/jasv2000/dt187g/jpaint/paint.png").getImage());
-    }
+        
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("paint.png")));
 
+    }
     public String setDialog(String dialogInfo){ // Method to set information for the dialog
         JFrame frame = new JFrame();
         dialogInfo = (String)JOptionPane.showInputDialog(

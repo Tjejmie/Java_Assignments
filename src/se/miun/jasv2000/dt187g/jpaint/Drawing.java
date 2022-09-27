@@ -29,22 +29,10 @@ public class Drawing implements Drawable {
     }
 
     public boolean nameExist(String name){ //Metod som returnerar true ifall name inte är null eller är en string som ej är tom
-        this.name = name;
-        if (name == "" || name == null){
-            return false;
-        }
-        else{
-            return true; 
-        }
+        return name != null && name != "";
     }
     public boolean authorExist(String author){ //Metod som returnerar true ifall author inte är null eller är en tom string
-        this.author = author;
-        if (author == "" || author == null){
-            return false;
-        }
-        else{
-            return true; 
-        }
+        return author != null && author != "";
     }
     
     public boolean save(String filename) throws DrawingException{ //Metod som kontrollerar och kastar DrawingExceptions ifall name/author saknas
