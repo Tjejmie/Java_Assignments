@@ -2,7 +2,7 @@ package se.miun.jasv2000.dt187g.jpaint;
 import java.awt.*;
 import java.awt.event.*;
 
-import javax.lang.model.util.ElementScanner14;
+
 import javax.swing.*;
 import java.util.*;
 
@@ -13,7 +13,7 @@ import java.util.*;
  * @author jasv2000 | Jamie Svanberg
  * @version 1.0
  */
-public class JPaintFrame extends JFrame implements ActionListener {
+public class JPaintFrame extends JFrame implements ActionListener, MouseListener, MouseMotionListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,15 +40,19 @@ public class JPaintFrame extends JFrame implements ActionListener {
     String dialogInfo;
     String dialogMessage;
     String shapeMessage;
+    String title;
+    String loadFile;
+    Color actualColor = Color.GREEN;
+
+    int mouseX = 0;
+    int mouseY = 0;
+
+  
 	public JPaintFrame() {
         setTitle();
-
-
+        
         // What should happen when the user closes the window
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Using null centers the window on the screen
-		// setLocationRelativeTo(null);
 
         //Call methods
         setIcon();
@@ -62,7 +66,10 @@ public class JPaintFrame extends JFrame implements ActionListener {
 
         //Set size on the window
         setSize(800,600); 
+        // Using null centers the window on the screen
+        setLocationRelativeTo(null);
 	}
+   
 
     public boolean nameExist(String name){ //Check if name exist
         return !name.isEmpty() && name != null;
@@ -73,7 +80,7 @@ public class JPaintFrame extends JFrame implements ActionListener {
 
     // Set the title of this JFrame (window)
     private void setTitle(){ 
-        
+
         if(nameExist(name) == true && authorExist(author) == true){
             setTitle("JPaint" + " - " + name + " by " + author);
         }
@@ -90,6 +97,7 @@ public class JPaintFrame extends JFrame implements ActionListener {
 
     //Method to create menu
 	private void createMenu() {
+
         // Create menubar and menu-option1 with categories
         menuBar = new JMenuBar();
         menu1 = new JMenu("File");
@@ -118,13 +126,15 @@ public class JPaintFrame extends JFrame implements ActionListener {
         menuBar.add(menu1);
         menuBar.add(menu2);
 
-        //Registrerar lyssnare på menyalternativen
+        // Add actionlistener on menu-options
         i6.addActionListener(this);
         i7.addActionListener(this);
+        i2.addActionListener(this);
+        i3.addActionListener(this);
 
         i1.addActionListener(this);
         i4.addActionListener(this);
-        i2.addActionListener(this);
+        
 
         setJMenuBar(menuBar);
 	}
@@ -170,33 +180,44 @@ public class JPaintFrame extends JFrame implements ActionListener {
         topJPanel.add(colors, BorderLayout.CENTER);
         topJPanel.add(combo, BorderLayout.LINE_END);
 
+        // Add mouseListener on colorJPanel
+        color1JPanel.addMouseListener(this);
+        color2JPanel.addMouseListener(this);
+        color3JPanel.addMouseListener(this);
+        color4JPanel.addMouseListener(this);
+        color5JPanel.addMouseListener(this);
+
+
         // Add topJPanel with all components to the window
         add(topJPanel, BorderLayout.PAGE_START);
     }
-
+    
     //Method to create center panel
     private void createCenterPanel(){
+
         //Create center and set bg white
         center = new JPanel();
         center.setBackground(Color.WHITE);
-
-        //Add center to the window
+        center.addMouseMotionListener(this);
+        
         add(center, BorderLayout.CENTER);
     }
-
+    
+ 
     //Method to create bottom panel
     private void createBottomPanel(){
+
         //Create labels and bot panel components
-        botLeftText = new JLabel("Coordinates: 127, 103");
+        botLeftText = new JLabel("Coordinates: 0,0");
         botRightText = new JLabel("Selected color:");
         botColorBox = new JPanel();
-        botColorBox.setBackground(Color.GREEN);
+        botColorBox.setBackground(actualColor);
         botColorBox.setOpaque(true);
-
+        
         botJPanel = new JPanel(new BorderLayout());
         botRight = new JPanel();
         botLeft = new JPanel();
-
+        
         //Add bot components to JPanels
         botRight.add(botRightText);
         botRight.add(botColorBox);
@@ -229,7 +250,7 @@ public class JPaintFrame extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) { // Actions on menu
         
         if (e.getSource() == i6){ // Menu-option "Name..."
             dialogMessage = "Enter name of the drawing:";
@@ -246,6 +267,7 @@ public class JPaintFrame extends JFrame implements ActionListener {
         }
 
         else if(e.getSource() == i1){ // Menu-option "New..."
+            shapeMessage = null;
             dialogMessage = "Enter name of the drawing:";
             name = setDialog(dialogInfo);
             dialogMessage = "Enter name of the author:";
@@ -254,24 +276,24 @@ public class JPaintFrame extends JFrame implements ActionListener {
         }
         
         else if(e.getSource() == i2){ // Menu-option "Save as..."
+            title = getTitle();
 
-            if(nameExist(name) == true && authorExist(author) == true){
-            shapeMessage = (name + " by " + author + ".shape");
-            }
-            else if(authorExist(author) == true){
-            shapeMessage = (author+".shape");
-            }
-		    else if(nameExist(name) == true){
-            shapeMessage = (name+".shape");
-            }
-            else{
-            shapeMessage = (".shape");
-            }
-            
             dialogMessage = "Save drawing to:";
-
+            shapeMessage = title;
+            while (shapeMessage.contains("JPaint")){
+                shapeMessage = shapeMessage.replace("JPaint", "");
+                while (shapeMessage.contains(" - ")){
+                    shapeMessage = shapeMessage.replace(" - ", ""); 
+                }
+                shapeMessage = shapeMessage + ".shape";
+            }
             setDialog(dialogInfo);
-            
+        }
+
+        else if(e.getSource() == i3){ // Menu-option "Load..."
+            shapeMessage = null;
+            dialogMessage = "Load Drawing from:";
+            loadFile = setDialog(dialogInfo);
         }
 
         else if(e.getSource() == i4){ // Menu-option "Exit"
@@ -279,5 +301,72 @@ public class JPaintFrame extends JFrame implements ActionListener {
         }
         
     }
+  
+    @Override
+    public void mouseClicked(MouseEvent e) { // Get colour on click from JPanels
+        if (e.getSource() == color1JPanel){ // JPanel cyan
+            actualColor = color1JPanel.getBackground();
+            setActualColor(actualColor);
+        }
+        else if (e.getSource() == color2JPanel){ // JPanel black
+            actualColor = color2JPanel.getBackground();
+            setActualColor(actualColor);
+        }
+        else if (e.getSource() == color3JPanel){ // JPanel magenta
+            actualColor = color3JPanel.getBackground();
+            setActualColor(actualColor);
+        }
+        else if (e.getSource() == color4JPanel){ // JPanel yellow
+            actualColor = color4JPanel.getBackground();
+            setActualColor(actualColor);
+        }
+        else if (e.getSource() == color5JPanel){ // JPanel green
+            actualColor = color5JPanel.getBackground();
+            setActualColor(actualColor);
+        }
+    }
 
+    private void setActualColor(Color color){
+        botColorBox.setBackground(color);
+    }
+
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) { // Set coordinates to 0.0 when mouse exit center
+        if (e.getSource() != center){
+            botLeftText.setText("Coordinates: 0,0"); 
+        }
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) { // Print coordinates from mouse movement
+        if (e.getSource() == center){
+                mouseX = e.getX();
+                mouseY = e.getY();
+                botLeftText.setText("Coordinates: " + mouseX + ", " + mouseY); 
+        }
+    }
 }
