@@ -1,10 +1,8 @@
 package se.miun.jasv2000.dt187g.jpaint;
 import java.awt.*;
 import java.awt.event.*;
-
-
 import javax.swing.*;
-import java.util.*;
+
 
 /**
  * Klass som ärver ifrån JFrame och som används för att skapa ett grafiskt användargränssnitt.
@@ -13,7 +11,7 @@ import java.util.*;
  * @author jasv2000 | Jamie Svanberg
  * @version 1.0
  */
-public class JPaintFrame extends JFrame implements ActionListener, MouseListener, MouseMotionListener {
+public class JPaintFrame extends JFrame implements ActionListener, MouseListener, MouseMotionListener, CoordinatesListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +30,7 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     private JPanel center;
 
     // Bot panel
-    private JLabel botLeftText, botRightText;
+    public JLabel botLeftText, botRightText;
     private JPanel botColorBox, botJPanel, botLeft, botRight; 
 
     String name = "";
@@ -43,24 +41,28 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     String title;
     String loadFile;
     Color actualColor = Color.GREEN;
-
-    int mouseX = 0;
-    int mouseY = 0;
-
+    int mouseX;
+    int mouseY;
+    DrawingPanel drawingPanel;
+  
   
 	public JPaintFrame() {
         setTitle();
         
         // What should happen when the user closes the window
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        drawingPanel = new DrawingPanel();
 
+        drawingPanel.addCoordinatesListener(this);
+      
+        
         //Call methods
         setIcon();
         createMenu();
         createTopPanel();
         createCenterPanel();
         createBottomPanel();
-
+        add(drawingPanel, BorderLayout.CENTER);
         // sizes this window to fit the preferred size and layouts of its subcomponents
         pack(); 
 
@@ -196,16 +198,18 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     private void createCenterPanel(){
 
         //Create center and set bg white
-        center = new JPanel();
-        center.setBackground(Color.WHITE);
-        center.addMouseMotionListener(this);
+        // center = new JPanel();
+        // center.setBackground(Color.WHITE);
+        // center.addMouseMotionListener(this);
         
-        add(center, BorderLayout.CENTER);
+        // add(drawingPanel, BorderLayout.CENTER);
     }
     
- 
+  public int coordinates;
+
     //Method to create bottom panel
     private void createBottomPanel(){
+      
 
         //Create labels and bot panel components
         botLeftText = new JLabel("Coordinates: 0,0");
@@ -330,6 +334,17 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         botColorBox.setBackground(color);
     }
 
+    @Override
+	public void setCoordinates() {
+        mouseX = drawingPanel.mouseX;
+        mouseY = drawingPanel.mouseY;
+		botLeftText.setText("Coordinates: " + mouseX + ", " + mouseY); 
+	}
+
+	@Override
+	public void removeCoordinates() {
+		botLeftText.setText("Coordinates: 0,0"); 
+	}
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -346,14 +361,14 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     @Override
     public void mouseEntered(MouseEvent e) {
         
-        
+       
     }
 
     @Override
     public void mouseExited(MouseEvent e) { // Set coordinates to 0.0 when mouse exit center
-        if (e.getSource() != center){
-            botLeftText.setText("Coordinates: 0,0"); 
-        }
+        // if (e.getSource() != drawingPanel){
+        //     botLeftText.setText("Coordinates: 0,0"); 
+        // }
     }
 
     @Override
@@ -363,10 +378,9 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
 
     @Override
     public void mouseMoved(MouseEvent e) { // Print coordinates from mouse movement
-        if (e.getSource() == center){
-                mouseX = e.getX();
-                mouseY = e.getY();
-                botLeftText.setText("Coordinates: " + mouseX + ", " + mouseY); 
-        }
+        
+       
+       
     }
+    
 }

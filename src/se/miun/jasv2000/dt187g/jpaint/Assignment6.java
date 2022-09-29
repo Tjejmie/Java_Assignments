@@ -3,14 +3,14 @@ package se.miun.jasv2000.dt187g.jpaint;
 import javax.swing.SwingUtilities;
 
 /**
-* <h1>Assignment 5</h1>
+* <h1>Assignment 6</h1>
 * This class is the starting point for the JPaint drawing application.
 * It creates a JFrame and makes it visible.
 * 
-* @author  jasv2000 | Jamie Svanberg
+* @author jasv2000 | Jamie Svanberg
 * @version 1.0
 */
-public class Assignment5 {
+public class Assignment6 {
 
 	public static void main(String[] args) {
 		// Always make sure GUI is created on the event dispatching thread.
