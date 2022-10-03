@@ -2,42 +2,34 @@ package se.miun.jasv2000.dt187g.jpaint;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.swing.*;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
-
+/**
+ * Klass som ärver från JPanel och är den klass som hanterar själva ritytan i programmet.
+ * I denna klass hanteras teckningen (drawing) och hanterar aktuell teckning som ritas upp genom att överskugga
+ * metoden paintComponent som anropar andra klassers draw-metod
+ * 
+ * @author jasv2000 | Jamie Svanberg
+ * @version 1.0
+ */
 public class DrawingPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+
     private Drawing drawing;
     private Shape shape;
     private ArrayList<CoordinatesListener> listeners = new ArrayList<>();
-    JPanel drawingPanel;
     int mouseX;
     int mouseY;
 
-    double x, y;
-    JPaintFrame jpant;
- 
-    String color;
-
-
     public DrawingPanel() {
-  
+        drawing = new Drawing();
         addMouseListener(this);
         addMouseMotionListener(this);
-        drawing = new Drawing();
-        
     }
     
     public DrawingPanel(Drawing drawing) {
-       
-
+       this.drawing = drawing;
     }
-   
 
     public void addCoordinatesListener(CoordinatesListener listener) {
         listeners.add(listener);
@@ -45,42 +37,24 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
 
     public void setDrawing(Drawing drawing){
         this.drawing = drawing;
-        drawing = new Drawing();
-        
         repaint();
-
     }
 
-  
-
-    
-
-    public void addShapesFromDrawing(Drawing drawing){
-        drawing = new Drawing();
+    public void addShapesFromDrawing(Drawing drawing){ // ?????????????????
+        
     }
+
     public Drawing getDrawing(){
         return drawing;
     }
-
- 
-    Rectangle rectangle;
+   
     @Override
     protected void paintComponent(Graphics g) {
-        jpant = new JPaintFrame();
-        rectangle = new Rectangle(x, y, color);
         super.paintComponent(g);
         setBackground(Color.white);
-
         
-      
-        // När man klickar på lode ska detta ske
-        for(Shape shape : drawing.shapes){ 
-            
-             shape.draw(g);
-        }
         drawing.draw(g); 
         
-
     }
 
 
@@ -101,43 +75,24 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
         
             for (CoordinatesListener coordinatesListener : listeners) {
                 coordinatesListener.removeCoordinates();
-                 
             }
         }
     }
     
-    
     @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-    }
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) {}
     @Override
-    public void mouseDragged(MouseEvent e) {
-        
-    }
+    public void mouseDragged(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-          
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-      
-    }
-
-   
-
-
+    public void actionPerformed(ActionEvent e) {}
 }
