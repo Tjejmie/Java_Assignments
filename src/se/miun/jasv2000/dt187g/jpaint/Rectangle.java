@@ -1,4 +1,5 @@
 package se.miun.jasv2000.dt187g.jpaint;
+import java.awt.Color;
 import java.awt.Graphics;
 /**
 * <h1>Rectangle</h1>
@@ -11,6 +12,7 @@ import java.awt.Graphics;
 
 public class Rectangle extends Shape { 
 
+
     public Rectangle(double x, double y, String color) {
         super(x, y, color);
 
@@ -18,6 +20,7 @@ public class Rectangle extends Shape {
 
     public Rectangle(Point point, String color) {
         super(point, color); 
+        
 
     }
 
@@ -50,7 +53,14 @@ public class Rectangle extends Shape {
 
     @Override
     public void draw(Graphics g) {
-        // Ska vara tom än så länge
+
+        double height = getHeight();
+        double width = getWidth();
+       
+
+        g.setColor(Color.decode(color));
+        g.fillRect((int)points.get(0).x, (int)points.get(0).y, (int)width,(int)height);
+        g.drawRect((int)points.get(0).x, (int)points.get(0).y, (int)width,(int)height);
     }
 
     @Override

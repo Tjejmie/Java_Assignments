@@ -1,6 +1,6 @@
 package se.miun.jasv2000.dt187g.jpaint;
 import java.awt.Graphics;
-
+import java.awt.Color;
 /**
 * <h1>Circle</h1>
 * Klass som skapar en cirkel baserat på koordinaternas start- och slutpunkt.
@@ -13,9 +13,12 @@ import java.awt.Graphics;
 public class Circle extends Shape {
     
     final double pi = 3.14; 
-
+    double x;
+    double y;
     public Circle(double x, double y, String color) {
         super(x, y, color);
+        this.x = x;
+        this.y = y;
     }
 
     public Circle(Point p, String color) {
@@ -45,10 +48,22 @@ public class Circle extends Shape {
     public void draw() {
         System.out.println(toString());
     }
-
+ 
     @Override
     public void draw(Graphics g) {
-        // Ska lämnas tom
+       
+        double r = getRadius();
+        double xValue = points.get(0).x;
+        double yValue =points.get(0).y;
+
+        xValue = xValue-(r);
+        yValue = yValue-(r);
+
+        g.setColor(Color.decode(color));
+        g.fillOval((int)xValue,(int)yValue, (int)r*2, (int)r*2);
+        g.drawOval((int)xValue,(int)yValue, (int)r*2, (int)r*2);
+        
+
     }
 
     @Override

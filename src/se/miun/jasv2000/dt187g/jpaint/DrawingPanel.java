@@ -2,7 +2,9 @@ package se.miun.jasv2000.dt187g.jpaint;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.*;
 import java.awt.Dimension;
@@ -17,17 +19,25 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
     int mouseX;
     int mouseY;
 
-    public DrawingPanel() {
+    double x, y;
+    JPaintFrame jpant;
+ 
+    String color;
 
+
+    public DrawingPanel() {
+  
         addMouseListener(this);
         addMouseMotionListener(this);
-
+        drawing = new Drawing();
+        
     }
     
     public DrawingPanel(Drawing drawing) {
-        this.drawing = drawing;
-        
+       
+
     }
+   
 
     public void addCoordinatesListener(CoordinatesListener listener) {
         listeners.add(listener);
@@ -35,31 +45,48 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
 
     public void setDrawing(Drawing drawing){
         this.drawing = drawing;
+        drawing = new Drawing();
+        
+        repaint();
 
     }
+
+  
+
+    
+
     public void addShapesFromDrawing(Drawing drawing){
-        drawing.addShape(shape);
+        drawing = new Drawing();
     }
     public Drawing getDrawing(){
         return drawing;
     }
 
-
-
+ 
+    Rectangle rectangle;
     @Override
     protected void paintComponent(Graphics g) {
-   
+        jpant = new JPaintFrame();
+        rectangle = new Rectangle(x, y, color);
         super.paintComponent(g);
         setBackground(Color.white);
+
+        // drawing.author = jpant.author;
+
+        // drawing.setAuthor(author);
+        // drawing.setName(name);
         
+      
+        // När man klickar på lode ska detta ske
+        for(Shape shape : drawing.shapes){ 
+            
+             shape.draw(g);
+        }
+        drawing.draw(g); 
+        
+
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
-    
 
     @Override
     public void mouseMoved(MouseEvent e) { // Print coordinates from mouse movement
@@ -82,7 +109,7 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
             }
         }
     }
-    JPaintFrame jpant;
+    
     
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -91,12 +118,16 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
+
+    }
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
+          
     }
 
     @Override

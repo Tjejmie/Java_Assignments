@@ -4,4 +4,5 @@ public interface CoordinatesListener {
     void setCoordinates();
 
     void removeCoordinates();
+
 }

@@ -1,5 +1,6 @@
 package se.miun.jasv2000.dt187g.jpaint;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -14,9 +15,10 @@ import java.util.ArrayList;
 
 public class Drawing implements Drawable {
 
+    JPaintFrame frame;
     private String name;
     private String author;
-    private ArrayList<Shape> shapes;
+    public ArrayList<Shape> shapes;
     
     public Drawing() {
         this.shapes = new ArrayList<>(); 
@@ -50,8 +52,14 @@ public class Drawing implements Drawable {
         
     }
 
-    
 
+    //Set metoder
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setAuthor(String author){
+        this.author = author;
+    }
     //Get metoder
     public String getName(){
         if(name == null){
@@ -64,14 +72,6 @@ public class Drawing implements Drawable {
             return "";
         }
         return author;
-    }
-
-    //Set metoder
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setAuthor(String author){
-        this.author = author;
     }
 
     public void addShape(Shape shape) { //metod som tar in ett shapeobjekt och lägger in i listan shapes
@@ -113,13 +113,15 @@ public class Drawing implements Drawable {
             System.out.println(shape);
         }
     }
-
-
+    
     @Override
     public void draw(Graphics g) {
-        //Lämnas tom
-        
+        frame = new JPaintFrame();
+        getAuthor();
+
     }
+
+  
 
     public String toString(){
         return ("Drawing[name=" + getName() + "; author=" + getAuthor() +  "; size= " + getSize() + "; circumference= "+ getTotalCircumference() + "; area="+ getTotalArea() + ";]");
