@@ -1,11 +1,8 @@
 package se.miun.jasv2000.dt187g.jpaint;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.ProcessHandle.Info;
 import java.util.ArrayList;
-
 import javax.swing.*;
-
 
 /**
  * Klass som ärver ifrån JFrame och som används för att skapa ett grafiskt användargränssnitt.
@@ -29,9 +26,6 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     private JComboBox<String> comboBox;
     private String[] figures = {"Rectangle", "Circle"};
 
-    // Center panel
-    private JPanel center;
-
     // Bot panel
     public JLabel botLeftText, botRightText;
     private JPanel botColorBox, botJPanel, botLeft, botRight; 
@@ -47,7 +41,10 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     int mouseX;
     int mouseY;
     DrawingPanel drawingPanel;
+    Drawing drawing = new Drawing();
     private ArrayList<CoordinatesListener> listeners = new ArrayList<>();
+    public int coordinates;
+
     public void addCoordinatesListener(CoordinatesListener listener) {
         listeners.add(listener);
     }
@@ -65,7 +62,6 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         setIcon();
         createMenu();
         createTopPanel();
-        createCenterPanel();
         createBottomPanel();
         add(drawingPanel, BorderLayout.CENTER);
         // sizes this window to fit the preferred size and layouts of its subcomponents
@@ -201,18 +197,8 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         add(topJPanel, BorderLayout.PAGE_START);
     }
     
-    //Method to create center panel
-    private void createCenterPanel(){
 
-        //Create center and set bg white
-        // center = new JPanel();
-        // center.setBackground(Color.WHITE);
-        // center.addMouseMotionListener(this);
-        
-        // add(drawingPanel, BorderLayout.CENTER);
-    }
-    
-  public int coordinates;
+  
 
     //Method to create bottom panel
     private void createBottomPanel(){
@@ -260,7 +246,7 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
                 return dialogInfo;
     }
 
-    Drawing drawing = new Drawing();
+    
 
     public Drawing draw(Drawing drawing){
         
@@ -326,30 +312,25 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         }
         
         else if(e.getSource() == i2){ // Menu-option "Save as..."
-            title = getTitle();
-
+    
             dialogMessage = "Save drawing to:";
-            shapeMessage = title;
-            while (shapeMessage.contains("JPaint")){
-                shapeMessage = shapeMessage.replace("JPaint", "");
-                while (shapeMessage.contains(" - ")){
-                    shapeMessage = shapeMessage.replace(" - ", ""); 
-                }
+            setInfoAndSaveMessage();
                 shapeMessage = shapeMessage + ".shape";
-            }
             setDialog(dialogInfo);
         }
 
         else if(e.getSource() == i3){ // Menu-option "Load..."
+            
             draw(drawing);
             drawingPanel.setDrawing(drawing); 
+            
         }
 
         else if(e.getSource() == i5){ // Menu-option "Undo"
             int index = drawing.shapes.size() - 1; // Get last item from lost
             if (drawing.shapes.size() > 0){ // Check if list size is bigger than 0
                 drawing.shapes.remove(index); //Remove last item from list
-                drawingPanel.setDrawing(drawing);
+                repaint();
             }   
         }
 
@@ -360,9 +341,10 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
             double area = drawing.getTotalArea();
             name = drawing.getName();
             author = drawing.getAuthor();
+            setInfoAndSaveMessage();
       
-            JOptionPane.showMessageDialog(frame, name + " by " + author + "\n Number of shapes: " + size + "\n Total area: " 
-            + area + "\n Total circumference: " + circumference, 
+            JOptionPane.showMessageDialog(frame, shapeMessage  + "\nNumber of shapes: " + size + "\nTotal area: " 
+            + area + "\nTotal circumference: " + circumference, 
             "Info", JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -372,6 +354,16 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         }
     }
 
+    public void setInfoAndSaveMessage(){
+        title = getTitle();
+        shapeMessage = title;
+        while (shapeMessage.contains("JPaint")){
+            shapeMessage = shapeMessage.replace("JPaint", "");
+            while (shapeMessage.contains(" - ")){
+                shapeMessage = shapeMessage.replace(" - ", ""); 
+            }
+        }
+    }
     @Override
     public void mouseClicked(MouseEvent e) { // Get colour on click from JPanels
         if (e.getSource() == color1JPanel){ // JPanel cyan
@@ -413,44 +405,20 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
 	}
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-        
-       
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) { // Set coordinates to 0.0 when mouse exit center
-        // if (e.getSource() != drawingPanel){
-        //     botLeftText.setText("Coordinates: 0,0"); 
-        // }
-    }
+    public void mouseExited(MouseEvent e) {}
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-    }
+    public void mouseDragged(MouseEvent e) {}
 
     @Override
-    public void mouseMoved(MouseEvent e) { // Print coordinates from mouse movement
-        
-       
-       
-    }
-
-
-
-    
-    
+    public void mouseMoved(MouseEvent e) {}
 }

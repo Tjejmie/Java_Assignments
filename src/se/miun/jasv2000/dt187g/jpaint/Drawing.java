@@ -1,6 +1,5 @@
 package se.miun.jasv2000.dt187g.jpaint;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 
 public class Drawing implements Drawable {
 
-    JPaintFrame frame;
     private String name;
     private String author;
     public ArrayList<Shape> shapes;
@@ -49,7 +47,6 @@ public class Drawing implements Drawable {
         }
         
         return true;
-        
     }
 
 
@@ -116,12 +113,10 @@ public class Drawing implements Drawable {
     
     @Override
     public void draw(Graphics g) {
-        frame = new JPaintFrame();
-        getAuthor();
-
+        for(Shape shape : shapes){ 
+            shape.draw(g);
+        }
     }
-
-  
 
     public String toString(){
         return ("Drawing[name=" + getName() + "; author=" + getAuthor() +  "; size= " + getSize() + "; circumference= "+ getTotalCircumference() + "; area="+ getTotalArea() + ";]");

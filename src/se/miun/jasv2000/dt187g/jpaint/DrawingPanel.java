@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class DrawingPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 
     private Drawing drawing;
-    private Shape shape;
     private ArrayList<CoordinatesListener> listeners = new ArrayList<>();
     int mouseX;
     int mouseY;
@@ -37,11 +36,23 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
 
     public void setDrawing(Drawing drawing){
         this.drawing = drawing;
+        addShapesFromDrawing(drawing);
         repaint();
     }
 
-    public void addShapesFromDrawing(Drawing drawing){ // ?????????????????
-        
+    public void addShapesFromDrawing(Drawing draw){ // 
+        draw = new Drawing();
+        Shape rec = new Rectangle(500,100, "#ff0000");
+        Shape circ1 = new Circle(550, 175, "#A020F0");
+        Shape circ2 = new Circle(600, 175, "#0000ff");
+        rec.addPoint(650, 200);
+		circ1.addPoint(500, 175);
+		circ2.addPoint(550, 175);
+        draw.addShape(rec);
+		draw.addShape(circ1);
+		draw.addShape(circ2);
+        this.drawing.shapes.addAll(draw.shapes);
+       
     }
 
     public Drawing getDrawing(){
@@ -52,9 +63,8 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         setBackground(Color.white);
-        
         drawing.draw(g); 
-        
+
     }
 
 
