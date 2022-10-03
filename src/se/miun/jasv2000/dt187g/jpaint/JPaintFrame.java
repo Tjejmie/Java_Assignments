@@ -311,15 +311,18 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         }
 
         else if(e.getSource() == i1){ // Menu-option "New..."
+            drawing = new Drawing();
             shapeMessage = null;
             dialogMessage = "Enter name of the drawing:";
             name = setDialog(dialogInfo);
             dialogMessage = "Enter name of the author:";
             author = setDialog(dialogInfo);
+            setTitle();
             drawing.setName(name);
             drawing.setAuthor(author);
-            setTitle();
-            repaint();
+            
+            drawingPanel.setDrawing(drawing);
+            
         }
         
         else if(e.getSource() == i2){ // Menu-option "Save as..."

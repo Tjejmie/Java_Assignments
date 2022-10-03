@@ -71,10 +71,6 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
         super.paintComponent(g);
         setBackground(Color.white);
 
-        // drawing.author = jpant.author;
-
-        // drawing.setAuthor(author);
-        // drawing.setName(name);
         
       
         // När man klickar på lode ska detta ske
