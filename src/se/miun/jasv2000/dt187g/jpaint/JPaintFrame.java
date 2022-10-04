@@ -31,23 +31,25 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     private JPanel botColorBox, botJPanel, botLeft, botRight; 
 
     public String name = "";
+    public String tempName = "";
+    public String tempAuthor = "";
     public String author = "";
+    
     String dialogInfo;
     String dialogMessage;
     String shapeMessage;
     String title;
-    String loadFile;
     Color actualColor = Color.GREEN;
     int mouseX;
     int mouseY;
     DrawingPanel drawingPanel;
     Drawing drawing = new Drawing();
     private ArrayList<CoordinatesListener> listeners = new ArrayList<>();
-    public int coordinates;
 
     public void addCoordinatesListener(CoordinatesListener listener) {
         listeners.add(listener);
     }
+
 	public JPaintFrame() {
         setTitle();
         
@@ -57,7 +59,6 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
 
         drawingPanel.addCoordinatesListener(this);
       
-        
         //Call methods
         setIcon();
         createMenu();
@@ -73,12 +74,14 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         setLocationRelativeTo(null);
 	}
    
-
     public boolean nameExist(String name){ //Check if name exist
-        return !name.isEmpty() && name != null;
+        return name != null && !name.isEmpty();
+      
+        
+
     }
     public boolean authorExist(String author){ // Check if author exist
-        return !author.isEmpty() && author != null;
+        return author != null && !author.isEmpty();
     }
 
     // Set the title of this JFrame (window)
@@ -139,7 +142,6 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         i1.addActionListener(this);
         i4.addActionListener(this);
         i5.addActionListener(this);
-        
 
         setJMenuBar(menuBar);
 	}
@@ -196,14 +198,11 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         // Add topJPanel with all components to the window
         add(topJPanel, BorderLayout.PAGE_START);
     }
-    
 
-  
 
     //Method to create bottom panel
     private void createBottomPanel(){
       
-
         //Create labels and bot panel components
         botLeftText = new JLabel("Coordinates: 0,0");
         botRightText = new JLabel("Selected color:");
@@ -229,10 +228,9 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     }
 
     private void setIcon(){  //Method to set icon on window
-        
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("paint.png")));
-
     }
+
     public String setDialog(String dialogInfo){ // Method to set information for the dialog
         JFrame frame = new JFrame();
         dialogInfo = (String)JOptionPane.showInputDialog(
@@ -246,10 +244,9 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
                 return dialogInfo;
     }
 
-    
-
+    // Create drawing
     public Drawing draw(Drawing drawing){
-        
+
         Shape face = new Circle(100,100, "#ffe0bd");
         Shape leftEye = new Circle(75, 75, "#0000ff");
         Shape rightEye = new Circle(125, 75, "#0000ff");
@@ -269,7 +266,6 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
 		drawing.addShape(mouth);
         name = "Mona Lisa";
         author = "Da Vinci";
-
         drawing.setAuthor(author);
         drawing.setName(name);
    
@@ -283,16 +279,23 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         if (e.getSource() == i6){ // Menu-option "Name..."
             dialogMessage = "Enter name of the drawing:";
             shapeMessage = null;
-            name = setDialog(dialogInfo);
-            drawing.setName(name);
+            tempName = setDialog(dialogInfo);
+            if (tempName != null){
+                name = tempName;
+                drawing.setName(name);
+            }
             setTitle();
+
         }
 
         else if(e.getSource() == i7){ // Menu-option "Author..."
             dialogMessage = "Enter name of the author:";
             shapeMessage = null;
-            author = setDialog(dialogInfo);
-            drawing.setAuthor(author);
+            tempAuthor = setDialog(dialogInfo);
+            if (tempAuthor != null){
+                author = tempAuthor;
+                drawing.setAuthor(author);
+            }
             setTitle();
         }
 
@@ -300,15 +303,19 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
             drawing = new Drawing();
             shapeMessage = null;
             dialogMessage = "Enter name of the drawing:";
-            name = setDialog(dialogInfo);
+            tempName = setDialog(dialogInfo);
             dialogMessage = "Enter name of the author:";
-            author = setDialog(dialogInfo);
+            tempAuthor = setDialog(dialogInfo);
+
+            if(tempAuthor != null && tempName != null){
+                name = tempName;
+                author = tempAuthor;
+                drawing.setName(name);
+                drawing.setAuthor(author);
+            }
+  
+            drawingPanel.newDrawing(drawing); 
             setTitle();
-            drawing.setName(name);
-            drawing.setAuthor(author);
-            
-            drawingPanel.setDrawing(drawing);
-            
         }
         
         else if(e.getSource() == i2){ // Menu-option "Save as..."
@@ -348,13 +355,13 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
             "Info", JOptionPane.INFORMATION_MESSAGE);
         }
 
-
         else if(e.getSource() == i4){ // Menu-option "Exit"
             System.exit(0);
         }
     }
 
-    public void setInfoAndSaveMessage(){
+    // Metod that take titel and remove 'JPaint -' from it
+    public void setInfoAndSaveMessage(){ 
         title = getTitle();
         shapeMessage = title;
         while (shapeMessage.contains("JPaint")){
@@ -364,6 +371,7 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
             }
         }
     }
+
     @Override
     public void mouseClicked(MouseEvent e) { // Get colour on click from JPanels
         if (e.getSource() == color1JPanel){ // JPanel cyan

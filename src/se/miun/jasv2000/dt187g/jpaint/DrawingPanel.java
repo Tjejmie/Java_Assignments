@@ -34,13 +34,19 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
         listeners.add(listener);
     }
 
-    public void setDrawing(Drawing drawing){
+    public void setDrawing(Drawing drawing){ // Load drawing from JPaintFrame
+
         this.drawing = drawing;
         addShapesFromDrawing(drawing);
         repaint();
     }
 
-    public void addShapesFromDrawing(Drawing draw){ // 
+    public void newDrawing(Drawing drawing){ // Create new drawing
+        this.drawing = drawing;
+        repaint();
+    }
+
+    public void addShapesFromDrawing(Drawing draw){ // new shapes created and added in "original" drawing
         draw = new Drawing();
         Shape rec = new Rectangle(500,100, "#ff0000");
         Shape circ1 = new Circle(550, 175, "#A020F0");
@@ -52,7 +58,6 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
 		draw.addShape(circ1);
 		draw.addShape(circ2);
         this.drawing.shapes.addAll(draw.shapes);
-       
     }
 
     public Drawing getDrawing(){
@@ -63,14 +68,12 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         setBackground(Color.white);
+
         drawing.draw(g); 
-
     }
-
 
     @Override
     public void mouseMoved(MouseEvent e) { // Print coordinates from mouse movement
-
         if (e.getSource() == this){
             mouseX = e.getX();
             mouseY = e.getY();
@@ -79,6 +82,7 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
             }
         }
     }
+
     @Override
     public void mouseExited(MouseEvent e) { // Set coordinates to 0.0 when mouse exit center
         if (e.getSource() == this){
