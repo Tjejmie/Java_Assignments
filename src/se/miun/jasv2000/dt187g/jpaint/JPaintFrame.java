@@ -37,6 +37,8 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
 
     String name = "";
     String author = "";
+    String tempName = "";
+    String tempAuthor = "";
     String dialogInfo;
     String dialogMessage;
     String shapeMessage;
@@ -255,23 +257,33 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         if (e.getSource() == i6){ // Menu-option "Name..."
             dialogMessage = "Enter name of the drawing:";
             shapeMessage = null;
-            name = setDialog(dialogInfo);
+            tempName = setDialog(dialogInfo);
+            if (tempName != null){
+                name = tempName;
+            }
             setTitle();
         }
 
         else if(e.getSource() == i7){ // Menu-option "Author..."
             dialogMessage = "Enter name of the author:";
             shapeMessage = null;
-            author = setDialog(dialogInfo);
+            tempAuthor = setDialog(dialogInfo);
+            if (tempAuthor != null){
+                author = tempAuthor;
+            }
             setTitle();
         }
 
         else if(e.getSource() == i1){ // Menu-option "New..."
             shapeMessage = null;
             dialogMessage = "Enter name of the drawing:";
-            name = setDialog(dialogInfo);
+            tempName = setDialog(dialogInfo);
             dialogMessage = "Enter name of the author:";
-            author = setDialog(dialogInfo);
+            tempAuthor = setDialog(dialogInfo);
+            if (tempAuthor != null && tempName != null){
+                author = tempAuthor;
+                name = tempName;
+            }
             setTitle();
         }
         
