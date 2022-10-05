@@ -34,17 +34,15 @@ public class DrawingPanel extends JPanel implements ActionListener, MouseListene
         listeners.add(listener);
     }
 
-    public void setDrawing(Drawing drawing){ // Load drawing from JPaintFrame
+    public void setDrawing(Drawing drawing){ // Load/New drawing from JPaintFrame
 
         this.drawing = drawing;
-        addShapesFromDrawing(drawing);
+        if (drawing.shapes.size() != 0){ 
+            addShapesFromDrawing(drawing); // Add shapes from another drawing but only if this drawing aint 0
+        }
         repaint();
     }
 
-    public void newDrawing(Drawing drawing){ // Create new drawing
-        this.drawing = drawing;
-        repaint();
-    }
 
     public void addShapesFromDrawing(Drawing draw){ // new shapes created and added in "original" drawing
         draw = new Drawing();

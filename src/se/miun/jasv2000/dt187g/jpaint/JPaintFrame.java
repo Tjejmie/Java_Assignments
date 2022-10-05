@@ -32,7 +32,8 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
 
     public String name = "";
     public String author = "";
-    
+    public String tempName = "";
+    public String tempAuthor = "";
     String dialogInfo;
     String dialogMessage;
     String shapeMessage;
@@ -277,8 +278,9 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         if (e.getSource() == i6){ // Menu-option "Name..."
             dialogMessage = "Enter name of the drawing:";
             shapeMessage = null;
-            name = setDialog(dialogInfo);
-            if (name != null){
+            tempName = setDialog(dialogInfo);
+            if (tempName != null){
+                name = tempName;
                 drawing.setName(name);
                 setTitle();
             }
@@ -287,8 +289,9 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         else if(e.getSource() == i7){ // Menu-option "Author..."
             dialogMessage = "Enter name of the author:";
             shapeMessage = null;
-            author = setDialog(dialogInfo);
-            if (author != null){
+            tempAuthor = setDialog(dialogInfo);
+            if (tempAuthor != null){
+                author = tempAuthor;
                 drawing.setAuthor(author);
                 setTitle();
             }
@@ -299,17 +302,19 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
             drawing = new Drawing();
             shapeMessage = null;
             dialogMessage = "Enter name of the drawing:";
-            name = setDialog(dialogInfo);
+            tempName = setDialog(dialogInfo);
             dialogMessage = "Enter name of the author:";
-            author = setDialog(dialogInfo);
+            tempAuthor = setDialog(dialogInfo);
 
-            if(author != null && name != null){
+            if(tempAuthor != null && tempName != null){
+                name = tempName;
+                author = tempAuthor;
                 drawing.setName(name);
                 drawing.setAuthor(author);
                 setTitle();
             }
   
-            drawingPanel.newDrawing(drawing); 
+            drawingPanel.setDrawing(drawing);
             
         }
         
@@ -329,7 +334,7 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         }
 
         else if(e.getSource() == i5){ // Menu-option "Undo"
-            int index = drawing.shapes.size() - 1; // Get last item from lost
+            int index = drawing.shapes.size() - 1; // Get last item from list
             if (drawing.shapes.size() > 0){ // Check if list size is bigger than 0
                 drawing.shapes.remove(index); //Remove last item from list
                 repaint();
