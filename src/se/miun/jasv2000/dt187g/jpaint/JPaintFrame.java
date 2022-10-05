@@ -31,8 +31,6 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
     private JPanel botColorBox, botJPanel, botLeft, botRight; 
 
     public String name = "";
-    public String tempName = "";
-    public String tempAuthor = "";
     public String author = "";
     
     String dialogInfo;
@@ -279,43 +277,40 @@ public class JPaintFrame extends JFrame implements ActionListener, MouseListener
         if (e.getSource() == i6){ // Menu-option "Name..."
             dialogMessage = "Enter name of the drawing:";
             shapeMessage = null;
-            tempName = setDialog(dialogInfo);
-            if (tempName != null){
-                name = tempName;
+            name = setDialog(dialogInfo);
+            if (name != null){
                 drawing.setName(name);
+                setTitle();
             }
-            setTitle();
-
         }
 
         else if(e.getSource() == i7){ // Menu-option "Author..."
             dialogMessage = "Enter name of the author:";
             shapeMessage = null;
-            tempAuthor = setDialog(dialogInfo);
-            if (tempAuthor != null){
-                author = tempAuthor;
+            author = setDialog(dialogInfo);
+            if (author != null){
                 drawing.setAuthor(author);
+                setTitle();
             }
-            setTitle();
+            
         }
 
         else if(e.getSource() == i1){ // Menu-option "New..."
             drawing = new Drawing();
             shapeMessage = null;
             dialogMessage = "Enter name of the drawing:";
-            tempName = setDialog(dialogInfo);
+            name = setDialog(dialogInfo);
             dialogMessage = "Enter name of the author:";
-            tempAuthor = setDialog(dialogInfo);
+            author = setDialog(dialogInfo);
 
-            if(tempAuthor != null && tempName != null){
-                name = tempName;
-                author = tempAuthor;
+            if(author != null && name != null){
                 drawing.setName(name);
                 drawing.setAuthor(author);
+                setTitle();
             }
   
             drawingPanel.newDrawing(drawing); 
-            setTitle();
+            
         }
         
         else if(e.getSource() == i2){ // Menu-option "Save as..."
