@@ -8,9 +8,9 @@ public class Test {
 
     private static void Car(){
         Engine engine = new Engine();
-        Person driver = new Person(null);
-        Car car2 = new Car(0);
-        Car car = new Car(14500, car2.getMaxPassengersWeight(), engine, driver);
+
+
+        Car car = new Car(14500, 1600, engine);
 
         System.out.println("Total milage = " + car.getMilage());
         System.out.println("Trying to start car...");
@@ -18,27 +18,30 @@ public class Test {
         System.out.println("Is engine on? " + engine.isEngineRunning());
 
         System.out.println("Set driver and drive 20 KM");
-        driver.setName("Susanne");
-        car.drive(20);
-        System.out.println("Total milage = " + car.getMilage());
-
-
-        System.out.println("Picking up passengers:");
-        System.out.println("Max weight for passengers: " + car.getMaxPassengersWeight());
-        Passenger pass1= new Passenger("Marie", 75);
-        car.addPass(pass1);
-        System.out.println("Weight left from total = " + car.getRemainingWeight());
-        Passenger pass2= new Passenger("Sofie", 56);
-        car.addPass(pass2);
-        System.out.println("Weight left from total = " + car.getRemainingWeight());
-        Passenger pass3= new Passenger("Kalle", 270);
-        car.addPass(pass3);
-        System.out.println("Weight left from total = " + car.getRemainingWeight());
+        car.driver.setName("Susanne");
+   
+    
+        if (car.drive(20) != false){
+            System.out.println("Total milage = " + car.getMilage());
         
-
-        System.out.println("Drive 150 KM");
-        car.drive(150);
-        System.out.println("Total milage = " + car.getMilage());
+            System.out.println("Picking up passengers:");
+            System.out.println("Max weight for passengers: " + car.getMaxPassengersWeight());
+            Passenger pass1= new Passenger("Marie", 75);
+            car.addPass(pass1);
+            System.out.println("Weight left from total = " + car.getRemainingWeight());
+            Passenger pass2= new Passenger("Sofie", 56);
+            car.addPass(pass2);
+            System.out.println("Weight left from total = " + car.getRemainingWeight());
+            Passenger pass3= new Passenger("Kalle", 270);
+            car.addPass(pass3);
+            System.out.println("Weight left from total = " + car.getRemainingWeight());
+            
+    
+            System.out.println("Drive 150 KM");
+            car.drive(150);
+            System.out.println("Total milage = " + car.getMilage());
+        }
+        
 
         System.out.println("Turning car off...");
         car.stopCar();
