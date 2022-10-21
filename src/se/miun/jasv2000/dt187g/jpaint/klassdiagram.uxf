@@ -1,0 +1,76 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>400</x><y>330</y><w>130</w><h>150</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+Drawable
+--
+
+--
+draw()
+draw(g: Graphics)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>730</x><y>300</y><w>230</w><h>190</h></coordinates><panel_attributes>Point
+--
+# x: double
+# y: double
+--
++Point(x: double, y: double)
++Point(): Point
++getX(): double
++getY(): double
++setX(x: double)
++setY(y: double)
++toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>10</x><y>30</y><w>270</w><h>200</h></coordinates><panel_attributes>Rectangle
+--
+
+--
++Rectangle(x: double, y: double, color: String)
++Rectangle(point:Point, color:String)
++getWidth(): double
++getHeight: double
++draw()
++draw(g: Graphics)
++getCircumference(): double
++getArea(): double
++hasEndpoint(): boolean
++toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>30</y><w>230</w><h>190</h></coordinates><panel_attributes>Circle
+--
+- PI: double
+--
++Circle(x: double, y: double, color:String)
++Circle(p: Point, color: String)
++getRadius(): double
++getCircumference(): double
++getArea(): double
++hasEndpoint(): boolean
++toString(): String
++draw()
++draw(g: Grapthics)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>150</x><y>340</y><w>150</w><h>150</h></coordinates><panel_attributes>Assignment1
+--
+
+--
+_+main(args: String [1..*])_
+_-testRectangle()_
+_-testCircle()_
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>410</x><y>30</y><w>260</w><h>240</h></coordinates><panel_attributes>/Shape/
+--
+# color: string
+# x: double
+# y: double
+--
++Shape(x: double, y: double, color: String)
++Shape(point: Point, color: String)
++getColor(): String
++setColor(color: String):
+/+getCircumference(): double/
+/+getArea(): double/
++addPoint(x: double, y: double): Point
+/+hasEndpoint(): boolean/
++getEndpoint(): String
++addPoint(p: Point): Point</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>270</x><y>90</y><w>160</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+m1=1..1
+Part of &gt;
+m2=*
+</panel_attributes><additional_attributes>140;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>660</x><y>90</y><w>160</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+m1=1..1
+&lt; Part of
+m2=*</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>260</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>260</y><w>180</w><h>140</h></coordinates><panel_attributes>lt=&lt;-
+m1=1..*
+Needs &gt;
+</panel_attributes><additional_attributes>160;110;10;110;10;10</additional_attributes></element></diagram>
