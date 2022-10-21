@@ -7,15 +7,18 @@ public class Car {
     private double milage;
     private boolean carRunning;
     private Engine engine;
-    private Person driver;
+    private double maxWeight;
+    private double carWeight = 1200;
 
-    //Eftersom passagerare inte måste finnas så nyas den ej upp i konstruktorn
+    // Kan vara 0 och finns därför inte i konstruktorn
+    public Person driver = new Person(null);
     private ArrayList<Passenger> passengers = new ArrayList<Passenger>();
 
-    public Car(double milage, double maxWeight, Engine engine, Person driver) {
-        this.engine = engine;
-        this.driver = driver;
+    public Car(double milage, double maxWeight, Engine engine) {
         this.milage = milage;
+        this.maxWeight = maxWeight;
+        this.engine = engine;
+        
     }
 
     public Car(double maxWeight){ 
@@ -39,8 +42,15 @@ public class Car {
         double remainingWeight = getRemainingWeight();
         double passWeight = passenger.getWeight();
         System.out.println("Adding passenger...");
-        if ((remainingWeight - passWeight) > 0){
+
+        // Lite oklart i uppgiften ifall passagerare ska mätas efter maxPassengerWeight eller
+        // att det inte överstiger bilens totala maxvikt, så gör en kombination av båda fast
+        // de räknar ut exakt samma sak i slutändan
+        
+
+        if ((remainingWeight - passWeight) > 0 && (passWeight + carWeight) < maxWeight){
             passengers.add(passenger);
+            carWeight = carWeight += passWeight;
             System.out.println("Passenger added.");
         }
         else{
@@ -67,11 +77,16 @@ public class Car {
     }
 
     public boolean drive(double distance){
+        
         if (carRunning == true && driver.getName() != null && distance != 0){
             milage += distance;
             return true;
         }
-        return false;
+        else{
+            System.out.println("Wasn't possible to drive car");
+            return false;
+        }
+        
     }
     
 }
